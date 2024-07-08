@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search and Highlight</title>
+  <style>
+    .mark {
+      background-color: yellow;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div style="margin-bottom: 10px;">
+  <input type="text" id="searchBox" placeholder="Search this page..." style="padding: 5px; width: 200px;" />
+  <button onclick="searchAndHighlight()" style="padding: 5px;">Search</button>
+</div>
+
+<!-- Include mark.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+
+<script>
+  function searchAndHighlight() {
+    // Clear previous highlights
+    var context = window.parent.document.querySelector("main"); // Use the main content area of the parent document
+    var instance = new Mark(context);
+    instance.unmark({
+      done: function() {
+        var searchTerm = document.getElementById('searchBox').value;
+        if (searchTerm) {
+          instance.mark(searchTerm);
+        }
+      }
+    });
+  }
+
+  // Add styles for highlighting
+  var style = window.parent.document.createElement('style');
+  style.innerHTML = '.mark { background-color: yellow; }';
+  window.parent.document.head.appendChild(style);
+</script>
+
+</body>
+</html>
